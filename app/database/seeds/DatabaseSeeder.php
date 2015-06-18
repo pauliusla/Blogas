@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         foreach (range(0, 15) as $i) {
             Comment::create(
                 [
+                    'post_id'=>$faker->$post->id,
                     'commenter' => $faker->word,
                     'comment' => $faker->paragraph,
                 ]

@@ -8,13 +8,13 @@ class CommentsController extends BaseController
         $this->beforeFilter('auth', ['only' => []]);
     }
 
-//    public function index(Post $post)
-//    {
-//        $comments = Comment::paginate(5);
-//
-//        return View::make('comments.index', compact('post', 'comments'));
-//
-//    }
+    public function index(Post $post)
+    {
+        $comments = Comment::paginate(5);
+
+        return View::make('comments.index', compact('post', 'comments'));
+
+    }
 
 
     public function create(Post $post)
@@ -42,12 +42,10 @@ class CommentsController extends BaseController
         return View::make('comments.index', compact( 'comment'));
     }
 
-
     public function edit(Post $post, Comment $comment)
     {
         return View::make('comments.edit', compact('post', 'comment'));
     }
-
 
     public function update(Post $post, Comment $comment)
     {
@@ -56,17 +54,13 @@ class CommentsController extends BaseController
             return Redirect::route('comments.edit', $post->id, $comment->id)->withErrors($validator);
         }
         $comment->update($input);
-
         return Redirect::route('posts.comments.index', [$post->id, $comment->id])->with('message', 'Comment updated.');
     }
-
 
     public function destroy(Post $post, Comment $comment)
     {
         $comment->delete();
 
-        return Redirect::route('posts.comments.show')->with('message', 'Comment deleted.');
+        return Redirect::route('posts.show', $comment->post_id)->with('message', 'Comment deleted.');
     }
-
-
 }

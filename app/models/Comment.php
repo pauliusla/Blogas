@@ -5,6 +5,11 @@ class Comment extends Eloquent {
 
     protected $fillable = ['commenter', 'comment'];
 
+    public function isAuthor()
+    {
+        return $this->user_id == Auth::user()-> id;
+    }
+
     public static $rules = [
         'commenter' => 'required',
         'comment' => 'required',
@@ -17,6 +22,6 @@ class Comment extends Eloquent {
 
     public function user()
     {
-        return $this->belongsTo('user');
+        return $this->belongsTo('User');
     }
 }

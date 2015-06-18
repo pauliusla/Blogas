@@ -8,7 +8,7 @@ Route::resource('posts', PostsController::class);
 
 Route::model('comments', Comment::class);
 
-Route::resource('posts.comments', CommentsController::class, ['except'=>['index']]);
+Route::resource('posts.comments', CommentsController::class);
 
 Route::get('login', ['as' => 'login', 'uses' => 'UsersController@login', 'before' => 'guest']);
 
@@ -33,14 +33,16 @@ Route::get('logout', ['as' => 'logout', 'uses' => 'UsersController@logout']);
 Route::get('login', ['as' => 'login', 'uses' => 'UsersController@login']);
 
 
-Route::group(['before' => 'admin', 'prefix' => 'admin'], function()
-{
-    Route::get('edit', ['as' => 'admin.posts.edit', 'uses' => 'UsersController@logout']);
-//    Route::get('posts.edit', );
-//    Route('posts.comments.edit');
-//    Route('posts.delete');
-//    Route('posts.comments.delete');
-});
+//Route::group(['before' => 'admin', 'prefix' => 'admin'], function()
+//{
+//    Route::get('edit/post', ['as' => 'admin.posts.edit', 'uses' => 'AdminController@editPost']);
+//
+//    Route::get('edit/comment', ['as' => 'admin.posts.comments.edit', 'uses'=>'AdminController@editComment' ]);
+//
+//    Route::get('delete/post', ['as' => 'admin.posts.destroy', 'uses' => 'AdminController@destroyPost']);
+//
+//    Route::get('delete/comment', ['as' => 'admin.posts.comments.destroy', 'uses' => 'AdminController@destroyComment']);
+//});
 
 Route::model('users', User::class);
 

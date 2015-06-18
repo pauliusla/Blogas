@@ -4,12 +4,11 @@
 
 @section('content')
 
-    <h2>{{'All users'}}</h2>
-    @foreach($users as $user)
-        <div class="well well-sm">
-            <h4>
-        {{ link_to_route('users.show', $user->email, [$user->id]) }}
-        </h4>
+    <form class="navbar-form navbar-left" role="search" method="get">
+        <div class="form-group">
+            <input type="text" maxlength="20" class="form-control" placeholder="Search" name="search">
         </div>
-    @endforeach
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <br></br>
 @stop

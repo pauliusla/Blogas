@@ -2,8 +2,18 @@
 
 class UsersController extends BaseController {
 
+    public function indexSearch()
+    {
+        return View::make('users.indexSearch', compact('users'));
+    }
+
     public function index()
     {
+        if ($search = Input::get('search')) {
+            $users = User::where('email', 'like', '%' . $search . '%')->paginate(10);
+
+            return View::make('users.indexSearch', compact('users'));
+        }
         $users = User::all();
 
         return View::make('users.index', compact('users'));

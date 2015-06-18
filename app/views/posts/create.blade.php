@@ -11,20 +11,20 @@
     </ul>
     @endif
 
-    <center><div class="col-md-2">
+    <div class="text-center"><div class="col-md-12">
 
             {{ Form::open(['route' => ['posts.store']]) }}
-            <div class="form-group>
+            <div class="form-group">
                         {{ Form::label('title', 'Title') }}
-                        {{Form::text('title', Input::old('title'),['class' =>'form-control'] )}}
+                        {{Form::text('title', Input::old('title'),['class' =>'form-control', 'maxlength'=>"300"] )}}
                     </div>
                     </div>
-                    <div class="col-md-6">
-            <div class="form-group>{{ Form::label('content', 'Content');}}
-                    {{ Form::textarea('content', Input::old('content'), ['class'=>'form-control']);}}
+                    <div class="col-md-12">
+            <div class="form-group">{{ Form::label('content', 'Content');}}
+                    {{ Form::textarea('content', Input::old('content'), ['class'=>'form-control', 'maxlength'=>"300"]);}}
                     </div>
                     <div class="col-md-2">
             {{ Form::submit('Submit', ['class'=>'form-control']);}}</div>
         </div>
-        </div></center>
+        </div></div>
 @stop

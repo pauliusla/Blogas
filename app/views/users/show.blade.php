@@ -1,8 +1,15 @@
 @extends('app')
 
-@section('title', 'Register')
+@section('title', 'User Profile')
 
 @section('content')
-    <center><h2>You are now visiting</h2></center>
-<center><h2>{{$user->email}}</h2></center>
+    <div class="text-center"><h2>You are now visiting</h2></div>
+    @if ($user->isAdmin())
+    <br>{{'User is admin'}}</br>
+        @else
+        <br>
+        {{'User is Not admin'}}
+        </br>
+    @endif
+<div class="text-center"><h2>{{$user->email}}</h2></div>
     @stop

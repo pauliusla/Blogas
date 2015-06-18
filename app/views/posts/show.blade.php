@@ -4,31 +4,31 @@
 
 @section('content')
     <br><br/>
-    <center><h2>Post</h2></center>
+    <div class="text-center"><h2>Post</h2></div>
     <br><br/>
     @if(Session::has('message'))
         <div class="alert alert-success" role="alert">Success: {{{ Session::get('message') }}}</div>
     @endif
-    <center>
+    <div class="text-center">
         <div class="well well-lg">
             <div class="well well-sm">
                 <h4>
                     <div class="pull-right">
                         <div class="btn-group">
+                            @if(Auth::user()->isAdmin())
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-
                                 Action <span class="caret"></span>
                             </button>
+                            @endif
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">{{ Form::open(['class' => 'form-inline', 'method' => 'DELETE', 'route' => ['posts.destroy', $post->id]]) }}
-                                        {{ Form::close() }}</a></li>
+                                <li><a href="#" data-action="{{ route('posts.destroy', $post->id) }}" class="btn btn-danger delete-toggle">Delete</a></li>
                                 <li><a href="#">{{ link_to_route('posts.edit', 'Edit', [$post->id], ['class' => 'btn btn-info']) }}</a></li>
                             </ul>
                         </div>
                     </div>
                     {{$post->title}}</h4></div>
             {{$post->content}}
-        </div></center>
+        </div></div>
     @if(!$errors->isEmpty())
         <div class="alert alert-info" role="alert">Whoops there were errors!</div>
         <ul>
@@ -36,58 +36,44 @@
                 <div class="alert alert-warning" role="alert"><br>{{{ $message }}}<br/></div>
             @endforeach
                 @endif
-                <center><h3>Create comment</h3></center>
-                <center><div class="col-md-2">
+                @if(Auth::check())
+                <div class="text-center"><h3>Create comment</h3></div>
+                <div class="text-center"><div class="col-md-12">
 
-                    {{ Form::open(['route' => ['posts.comments.store','posts' => $post->id]]) }}
-                    <div class="form-group>
+                    {{ Form::open(['route' => ['posts.comments.store','posts' => $post->id, 'user_id'=>Auth::user()->id]]) }}
+                    <div class="form-group">
+                        <div class="col-md-4">
                         {{ Form::label('commenter', 'Commenter') }}
-                        {{Form::text('commenter', Input::old('commenter'),['class' =>'form-control'] )}}
-                    </div>
+                        {{Form::text('commenter', Input::old('commenter'),['class' =>'form-control', 'maxlength'=>"300"] )}}
+                        </div>
                     </div>
                     <div class="col-md-6">
-                    <div class="form-group>{{ Form::label('comment', 'Comment');}}
-                    {{ Form::textarea('comment', Input::old('comment'), ['class'=>'form-control']);}}
+                    <div class="form-group">{{ Form::label('comment', 'Comment');}}
+                    {{ Form::textarea('comment', Input::old('comment'), ['class'=>'form-control', 'maxlength'=>"300"]);}}
                     </div>
+                        </div>
                     <div class="col-md-2">
-                        {{ Form::submit('Submit', ['class'=>'form-control']);}}</div>
+                        <br>
+                        {{ Form::submit('Submit', ['class'=>'form-control']);}}
+                        </br>
                     </div>
-                </div></center>
-                <div class="clearfix"></div>
-                <center><h3>Comments</h3></center>
-                <br><br/>
-    @foreach($post->comments as $comment)
-                    <center>
-                        <div class="well well-lg">
-                            <div class="well well-sm">
-                                <h4>
-                                    <div class="pull-right">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    {{ Form::close() }}
 
-                                                Action <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">
-                                                        {{ Form::open(['class' => 'form-inline', 'method' => 'DELETE', 'route' => ['posts.comments.destroy', $post->id]]) }}
-                                                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
-                                                        {{ Form::close() }}</a></li>
-                                                <li><a href="#">
-                                                        {{ link_to_route('posts.comments.edit', 'Edit', [$post->id, $comment->id], ['class' => 'btn btn-info']) }}</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    {{ $comment->commenter or trans('no.title') }}</h4></div>
-                            {{ $comment->comment or trans('no.content') }}
-                        </div></center>
-    @endforeach
+                </div></div>
+                @endif
+                <div class="clearfix"></div>
+                <div class="text-center"><h3>Comments</h3></div>
+                <br><br/>
+
     </ul>
+        @include('posts.comments.show')
     <p>
         <p>
-            <br><br/>
-            {{--<center>{{link_to_route('posts.comments.index', 'Show more comments', $post->id)}}</center>--}}
+            <center>{{link_to_route('posts.comments.index', 'Show more comments', $post->id)}}</center>
         </p>
     </p>
     <br><br/>
 
+    @include('delete-modal')
 @stop
+

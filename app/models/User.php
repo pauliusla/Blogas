@@ -11,16 +11,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 
     public function isAdmin()
     {
         return $this->role == static::ROLE_ADMIN;
     }
+
 
     protected $fillable = ['first_name', 'last_name', 'email', 'password'];
 
@@ -33,11 +29,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	protected $table = 'users';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
 	protected $hidden = ['password', 'remember_token'];
 
     public function setPasswordAttribute($value){
@@ -54,6 +45,5 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     {
         return $this->hasMany('Comment');
     }
-
 
 }

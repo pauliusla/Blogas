@@ -4,30 +4,35 @@
 
 @section('content')
     <br><br/>
-    <center><h2>{{$post->title}}</h2></center>
-    <center><h3>{{'Comments'}}</h3></center>
+    <div class="text-center"><h2>{{$post->title}}</h2></div>
+    <div class="text-center"><h3>{{'Comments'}}</h3></div>
     @foreach($post->comments as $comment)
+        <div class="text-center">
+        <div class="well well-lg">
+            <div class="well well-sm">
+                <h4>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            @if(Auth::user()->isAdmin())
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 
-        <center>
-                <div class="well well-lg">
-                    <div class="well well-sm">
-                        <h4>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">
-                                            {{ Form::open(['class' => 'form-inline', 'method' => 'DELETE', 'route' => ['posts.comments.destroy', $post->id]]) }}
-                                            {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
-                                            {{ Form::close() }}</a></li>
-                                    <li><a href="#">{{ link_to_route('posts.comments.edit', 'Edit', [$post->id, $comment->id], ['class' => 'btn btn-info']) }}</a></li>
-                                </ul>
-                            </li>
-                            {{ $comment->commenter or trans('no.title') }}</h4></div>
-                    {{ $comment->comment or trans('no.content') }}
-                </div></center>
-
+                                    Action <span class="caret"></span>
+                                </button>
+                            @endif
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#" data-action="{{ route('posts.comments.destroy', $post->id, $comment->id) }}" class="btn btn-danger delete-toggle">Delete</a></li>
+                                <li><a href="#">{{ link_to_route('posts.comments.edit', 'Edit', [$post->id, $comment->id], ['class' => 'btn btn-info']) }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    {{ $comment->commenter or trans('no.title') }}</h4></div>
+            {{ $comment->comment or trans('no.content') }}
+        </div>
+        </div>
 @endforeach
     <br><br/>
-    <center>{{ $comments->links() }}</center>
+    <div class="text-center">{{ $comments->links() }}</div>
     <br><br/>
-    @stop
+
+@include('delete-modal')
+@stop

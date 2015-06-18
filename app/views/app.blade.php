@@ -25,16 +25,11 @@
                 @if(Auth::check())
                     {{-- Kur as prisijunges--}}
                     <li><a href="{{ route('posts.index') }}">Posts</a></li>
-                    <li><a href="{{route('users.index')}}">Users</a></li>
+                    <li>{{link_to_route('users.index', 'Users')}}</li>
                     <li>{{link_to_route('users.show', 'User Profile', Auth::user()->id)}}</li>
                     <li><a href="{{route('posts.create')}}">Create Post</a> </li>
                     <li>{{link_to_route('logout', 'Log Out')}}</li>
-                    <li><form class="navbar-form navbar-left" role="search" method="get">{{--todo perdaryti i blade forma--}}
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" name="search">
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form></li>
+
                 @else
                     {{-- Kur neprisijunges--}}
                     <li><a href="{{route('users.create')}}">Register</a></li>
@@ -56,6 +51,7 @@
 
 {{ HTML::script(asset('/js/jquery.min.js')) }}
 {{ HTML::script(asset('/js/bootstrap.min.js')) }}
+@yield('scripts')
 
 </body>
 </html>
