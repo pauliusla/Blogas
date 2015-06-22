@@ -31,15 +31,16 @@ class CommentsController extends BaseController
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        $post->comments()->create($input + ['user_id'=>Auth::user()->id]);
+        $comment = $post->comments()->create($input);
+
+        Auth::user()->comments()->save($comment);
 
         return Redirect::route('posts.show', [$post->id])->with('message', 'Comment created');
     }
 
-
     public function show(Post $post, Comment $comment)
     {
-        return View::make('comments.index', compact( 'comment'));
+        return View::make('comments.index', compact('comment'));
     }
 
     public function edit(Post $post, Comment $comment)
@@ -54,6 +55,7 @@ class CommentsController extends BaseController
             return Redirect::route('comments.edit', $post->id, $comment->id)->withErrors($validator);
         }
         $comment->update($input);
+
         return Redirect::route('posts.comments.index', [$post->id, $comment->id])->with('message', 'Comment updated.');
     }
 

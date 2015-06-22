@@ -41,13 +41,7 @@
                 <div class="text-center"><div class="col-md-12">
 
                     {{ Form::open(['route' => ['posts.comments.store','posts' => $post->id, 'user_id'=>Auth::user()->id]]) }}
-                    <div class="form-group">
-                        <div class="col-md-4">
-                        {{ Form::label('commenter', 'Commenter') }}
-                        {{Form::text('commenter', Input::old('commenter'),['class' =>'form-control', 'maxlength'=>"300"] )}}
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                     <div class="form-group">{{ Form::label('comment', 'Comment');}}
                     {{ Form::textarea('comment', Input::old('comment'), ['class'=>'form-control', 'maxlength'=>"300"]);}}
                     </div>
@@ -67,12 +61,7 @@
 
     </ul>
         @include('posts.comments.show')
-    <p>
-        <p>
-            <center>{{link_to_route('posts.comments.index', 'Show more comments', $post->id)}}</center>
-        </p>
-    </p>
-    <br><br/>
+
 
     @include('delete-modal')
 @stop

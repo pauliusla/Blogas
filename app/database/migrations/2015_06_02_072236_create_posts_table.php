@@ -13,10 +13,9 @@ class CreatePostsTable extends Migration {
 	public function up()
 	{
         Schema::create('comments', function(Blueprint $table) {
+            $table->string('commenter');
             $table->increments('id');
             $table->unsignedInteger('post_id');
-            $table->string('commenter');
-            $table->string('email');
             $table->text('comment');
             $table->boolean('approved');
             $table->timestamps();

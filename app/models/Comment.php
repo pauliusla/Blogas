@@ -3,7 +3,7 @@ class Comment extends Eloquent {
 
     protected $table = 'comments';
 
-    protected $fillable = ['commenter', 'comment'];
+    protected $fillable = ['comment'];
 
     public function isAuthor()
     {
@@ -11,8 +11,7 @@ class Comment extends Eloquent {
     }
 
     public static $rules = [
-        'commenter' => 'required',
-        'comment' => 'required',
+        'comment' => 'required|string',
     ];
 
     public function post()

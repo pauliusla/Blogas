@@ -18,7 +18,7 @@ class PostsController extends BaseController
 
         $posts = Post::paginate(10);
 
-        return View::make('posts.index', compact('users' ,'posts'));
+        return View::make('posts.index', compact('users', 'posts'));
     }
 
     public function create()
@@ -31,10 +31,11 @@ class PostsController extends BaseController
         $validator = Validator::make($input = Input::all(), Post::$rules);
 
         if ($validator->fails()) {
+
             return Redirect::route('posts.create')->withErrors($validator);
         }
 
-        Post::create($input + ['user_id'=>Auth::user()->id]);
+        Auth::user()->posts()->create($input);
 
         return Redirect::route('posts.index')->with('message', 'Post created');
     }
@@ -48,18 +49,25 @@ class PostsController extends BaseController
     {
         return View::make('posts.edit', compact('post'));
     }
+
     public function update(Post $post)
     {
         $validator = Validator::make($input = Input::all(), Post::$rules);
+
         if ($validator->fails()) {
-            return Redirect::route('posts.edit',$post->id)->withErrors($validator);
+
+            return Redirect::route('posts.edit', $post->id)->withErrors($validator);
         }
+
         $post->update($input);
+
         return Redirect::route('posts.index')->with('message', 'Post edited');
     }
+
     public function destroy(Post $post)
     {
         $post->delete();
+
         return Redirect::route('posts.index')->with('message', 'Post deleted.');
     }
 }
