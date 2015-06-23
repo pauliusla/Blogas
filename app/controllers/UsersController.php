@@ -10,7 +10,8 @@ class UsersController extends BaseController {
     public function index()
     {
         if ($search = Input::get('search')) {
-            $users = User::where('email', 'like', '%' . $search . '%')->paginate(10);
+
+            $users = User::search($search)->paginate(10);
 
             return View::make('users.indexSearch', compact('users'));
         }
@@ -33,8 +34,10 @@ class UsersController extends BaseController {
         $validator = Validator::make($data, User::$rules);
 
         if($validator->fails()) {
+
             return Redirect::route('users.create')->withErrors($validator);
         }
+
         User::create($data);
 
         return Redirect::route('users.index')->with('success', trans('users.messages.create_success'));
@@ -60,6 +63,7 @@ class UsersController extends BaseController {
         $validator = Validator::make($data, User::$rules);
 
         if($validator->fails()) {
+
             return Redirect::route('users.edit', $user->id)->withErrors($validator);
         }
 
@@ -75,11 +79,10 @@ class UsersController extends BaseController {
 
         return Redirect::route('users.index')->with('success', trans('users.messages.destroy_success'));
     }
-
-    //prideta pagal tutoriala
     public function authenticate()
     {
         if(Auth::attempt($data = Input::only(['email', 'password']))){
+
             return Redirect::route('home');
         }
 
@@ -94,6 +97,7 @@ class UsersController extends BaseController {
     public function logout()
     {
         if(Auth::check()){
+
             Auth::logout();
         }
         return Redirect::route('login');

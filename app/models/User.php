@@ -12,23 +12,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
 
-    public static $data1 = [
-        'first_name'
-    ];
-
-    public static $data2 = [
-        'last_name'
-    ];
-
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('email', 'like', '%' . $search . '%');
+    }
 
     public function isAdmin()
     {
         return $this->role == static::ROLE_ADMIN;
-    }
-
-    public function getUserFullName()
-    {
-      return $this-> $data2;
     }
 
     protected $fillable = ['first_name', 'last_name', 'email', 'password'];

@@ -7,11 +7,11 @@ class PostsController extends BaseController
     {
         $this->beforeFilter('auth', ['only' => []]);
     }
-
     public function index()
     {
         if ($search = Input::get('search')) {
-            $posts = Post::where('title', 'like', '%' . $search . '%')->paginate(10);
+
+            $posts = Post::search($search)->paginate(10);
 
             return View::make('posts.index', compact('posts'));
         }

@@ -28,6 +28,7 @@ class CommentsController extends BaseController
         $validator = Validator::make($input = Input::all(), Comment::$rules);
 
         if ($validator->fails()) {
+
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
@@ -51,9 +52,12 @@ class CommentsController extends BaseController
     public function update(Post $post, Comment $comment)
     {
         $validator = Validator::make($input = Input::all(), Comment::$rules);
+
         if ($validator->fails()) {
+
             return Redirect::route('comments.edit', $post->id, $comment->id)->withErrors($validator);
         }
+
         $comment->update($input);
 
         return Redirect::route('posts.comments.index', [$post->id, $comment->id])->with('message', 'Comment updated.');
