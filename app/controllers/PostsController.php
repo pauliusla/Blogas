@@ -7,6 +7,7 @@ class PostsController extends BaseController
     {
         $this->beforeFilter('auth', ['only' => []]);
     }
+
     public function index()
     {
         if ($search = Input::get('search')) {

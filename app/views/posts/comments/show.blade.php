@@ -5,7 +5,7 @@
                 <h4>
                     <div class="pull-right">
                         <div class="btn-group">
-                            @if(Auth::user()->isAdmin())
+                            @if(Auth::user()->isAdmin() || Auth::user()->email == $comment->user->email)
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="false">
 

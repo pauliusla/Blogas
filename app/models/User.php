@@ -12,17 +12,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
 
+    protected $fillable = ['first_name', 'last_name', 'email', 'password'];
+
+    protected $table = 'users';
+
+    protected $hidden = ['password', 'remember_token'];
+
     public function scopeSearch($query, $search)
     {
         return $query->where('email', 'like', '%' . $search . '%');
     }
-
-    public function isAdmin()
-    {
-        return $this->role == static::ROLE_ADMIN;
-    }
-
-    protected $fillable = ['first_name', 'last_name', 'email', 'password'];
 
     public static $rules = [
         'first_name' => 'required',
@@ -31,9 +30,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         'password'=>'required|min:5'
     ];
 
-	protected $table = 'users';
-
-	protected $hidden = ['password', 'remember_token'];
+    public function isAdmin()
+    {
+        return $this->role == static::ROLE_ADMIN;
+    }
 
     public function setPasswordAttribute($value){
         $this->attributes['password'] = Hash::make($value);

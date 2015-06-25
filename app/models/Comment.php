@@ -5,11 +5,6 @@ class Comment extends Eloquent {
 
     protected $fillable = ['comment'];
 
-    public function isAuthor()
-    {
-        return $this->user_id == Auth::user()-> id;
-    }
-
     public static $rules = [
         'comment' => 'required|string',
     ];

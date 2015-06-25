@@ -15,6 +15,7 @@ class UsersController extends BaseController {
 
             return View::make('users.indexSearch', compact('users'));
         }
+
         $users = User::all();
 
         return View::make('users.index', compact('users'));
@@ -79,6 +80,7 @@ class UsersController extends BaseController {
 
         return Redirect::route('users.index')->with('success', trans('users.messages.destroy_success'));
     }
+
     public function authenticate()
     {
         if(Auth::attempt($data = Input::only(['email', 'password']))){
@@ -100,8 +102,10 @@ class UsersController extends BaseController {
 
             Auth::logout();
         }
+
         return Redirect::route('login');
     }
+
     public function login()
     {
         return View::make('users.login');

@@ -3,7 +3,7 @@
 @section('title', 'Edit Comment')
 
 @section('content')
-    @if(Auth::user()->isAdmin())
+    @if(Auth::user()->isAdmin() || Auth::user()->email == $comment->user->email)
     <h2>Edit Comment</h2>
     <div class="text-center"><div class="col-md-2">
             {{ Form::model($comment, ['method' => 'PUT', 'route' => ['posts.comments.update', $comment->post_id, $comment->id ]]) }}
