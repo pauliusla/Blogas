@@ -16,7 +16,7 @@ class UsersController extends BaseController {
             return View::make('users.indexSearch', compact('users'));
         }
 
-        $users = User::all();
+        $users = User::paginate(10);
 
         return View::make('users.index', compact('users'));
     }

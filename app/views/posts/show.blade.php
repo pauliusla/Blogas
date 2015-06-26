@@ -9,13 +9,15 @@
     @if(Session::has('message'))
         <div class="alert alert-success" role="alert">Success: {{{ Session::get('message') }}}</div>
     @endif
+    {{'Posted by: '}}
+    {{ link_to_route('users.show', $post->user->email, [$post->user->id]) }}
     <div class="text-center">
         <div class="well well-lg">
             <div class="well well-sm">
                 <h4>
                     <div class="pull-right">
                         <div class="btn-group">
-                            @if(Auth::user()->isAdmin())
+                            @if(Auth::user()->isAdmin() || Auth::user()->id == $post->user->id)
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 Action <span class="caret"></span>
                             </button>

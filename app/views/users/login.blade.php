@@ -6,18 +6,18 @@
 
     <h1>Login</h1>
     @if (Session::has('flash_error'))
-        <div id="flash_error">{{ Session::get('flash_error') }}</div>
+        <div class="alert alert-warning" role="alert">{{ Session::get('flash_error') }}</div>
     @endif
     {{ Form::open(['route' => ['authenticate'], 'method' => 'post']) }}
 
     <p>
-        {{ Form::label('email', 'Email') }}<br/>
-        {{ Form::text('email', Input::old('email'), ['maxlength'=>"40"]) }}
+        {{ Form::label('email', 'Email' ) }}<br/>
+        {{ Form::text('email', Input::old('email'),['class' =>'form-control', 'maxlength'=>"100"]) }}
     </p>
 
     <p>
         {{ Form::label('password', 'Password') }}<br/>
-        {{ Form::password('password') }}
+        {{ Form::password('password', ['class' =>'form-control', 'maxlength'=>"100"]) }}
     </p>
 
     <p>{{ Form::submit('Login') }}</p>

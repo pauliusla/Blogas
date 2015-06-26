@@ -9,19 +9,21 @@
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
-    <br></br>
+    <br><br/>
     <div class="text-center"><h2 class="post-listings">Posts</h2><hr></div>
 
     @if(Session::has('message'))
         <p><strong>Success:</strong> {{{ Session::get('message') }}}</p>
     @endif
         @foreach($posts as $post)
+            {{'Posted by: '}}
+            {{ link_to_route('users.show', $post->user->email, [$post->user->id]) }}
             <div class="text-center">
                     <div class="well well-sm">
                         <h4>
                             <div class="pull-right">
                                 <div class="btn-group">
-                                    @if(Auth::user()->isAdmin())
+                                    @if(Auth::user()->isAdmin() || Auth::user()->id == $post->user->id)
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 
                                         Action <span class="caret"></span>

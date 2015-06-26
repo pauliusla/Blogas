@@ -19,6 +19,8 @@ class CreatePostsTable extends Migration {
             $table->text('comment');
             $table->boolean('approved');
             $table->timestamps();
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 	}
 

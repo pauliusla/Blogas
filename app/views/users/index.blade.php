@@ -10,5 +10,19 @@
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
-    <br></br>
+    <br><br/>
+    <div class="text-center"><h2>Registered users</h2></div>
+    <div> @if (Auth::user()->IsAdmin())
+        @foreach($users as $user)
+                <div class="well well-sm">
+                    <h4>
+                        {{ link_to_route('users.show', $user->email, [$user->id]) }}
+                        {{ ' user is: ', $user->role }}
+                    </h4>
+                </div>
+        @endforeach
+            <div class="text-center">{{ $users->links() }}</div>
+              @endif
+    </div>
+    <br><br/>
 @stop

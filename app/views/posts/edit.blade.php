@@ -3,7 +3,7 @@
 @section('title', 'Edit Post')
 
 @section('content')
-    @if(Auth::user()->isAdmin())
+    @if(Auth::user()->isAdmin() || Auth::user()->id == $post->user->id)
     <h2>Edit Post</h2>
     <div class="text-center"><div class="col-md-12">
     {{ Form::model($post, ['method' => 'PUT', 'route' => ['posts.update', $post->id]]) }}
