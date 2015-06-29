@@ -51,7 +51,7 @@
                     <div class="col-md-2">
                         <br>
                         {{ Form::submit('Submit', ['class'=>'form-control']);}}
-                        </br>
+                        <br/>
                     </div>
                     {{ Form::close() }}
 

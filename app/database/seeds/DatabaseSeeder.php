@@ -14,11 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         Eloquent::unguard();
 
-        Post::truncate();
-
-        User::truncate();
-
-        Comment::truncate();
+       $this->truncate();
 
         $this->faker = \Faker\Factory::create();
 
@@ -36,6 +32,19 @@ class DatabaseSeeder extends Seeder
         }
 
 
+    }
+
+    protected function truncate()
+    {
+        DB::statement('SET foreign_key_checks = 0');
+
+        Comment::truncate();
+
+        Post::truncate();
+
+        User::truncate();
+
+        DB::statement('SET foreign_key_checks = 1');
     }
 
     protected function createUser()

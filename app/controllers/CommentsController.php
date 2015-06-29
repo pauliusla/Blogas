@@ -32,9 +32,13 @@ class CommentsController extends BaseController
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        $comment = $post->comments()->create($input);
+        $comment = new Comment($input);
 
-        Auth::user()->comments()->save($comment);
+        $comment->user_id = Auth::user() ->id;
+
+        $comment->post_id = $post ->id;
+
+        $comment->save();
 
         return Redirect::route('posts.show', [$post->id])->with('message', 'Comment created');
     }

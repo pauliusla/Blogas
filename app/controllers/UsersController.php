@@ -41,7 +41,7 @@ class UsersController extends BaseController {
 
         User::create($data);
 
-        return Redirect::route('users.index')->with('success', trans('users.messages.create_success'));
+        return Redirect::route('home')->with('success', trans('users.messages.create_success'));
     }
 
 

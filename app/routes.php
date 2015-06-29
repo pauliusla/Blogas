@@ -32,18 +32,6 @@ Route::get('logout', ['as' => 'logout', 'uses' => 'UsersController@logout']);
 
 Route::get('login', ['as' => 'login', 'uses' => 'UsersController@login']);
 
-
-//Route::group(['before' => 'admin', 'prefix' => 'admin'], function()
-//{
-//    Route::get('edit/post', ['as' => 'admin.posts.edit', 'uses' => 'AdminController@editPost']);
-//
-//    Route::get('edit/comment', ['as' => 'admin.posts.comments.edit', 'uses'=>'AdminController@editComment' ]);
-//
-//    Route::get('delete/post', ['as' => 'admin.posts.destroy', 'uses' => 'AdminController@destroyPost']);
-//
-//    Route::get('delete/comment', ['as' => 'admin.posts.comments.destroy', 'uses' => 'AdminController@destroyComment']);
-//});
-
 Route::model('users', User::class);
 
 Route::resource('users', UsersController::class);
